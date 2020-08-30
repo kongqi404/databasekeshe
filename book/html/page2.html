@@ -75,7 +75,7 @@
             <div class="select" style="font-weight: 700">
               <form class="form-inline">
                 搜索
-                <input type="text" class="form-control" v-model="sName" />
+                <input type="text" class="form-control" v-model="b_keyword" />
                 <input
                   type="button"
                   class="btn btn-primary"
@@ -101,6 +101,7 @@
                   <th>剩余图书</th>
                   <th>最早归还时间</th>
                   <th width="7%">是否可借</th>
+                  <th>借阅</th>
                 </tr>
 
                 <tr />
@@ -115,21 +116,19 @@
                   <td>{{item.b_total}}</td>
                   <td>{{item.b_lave}}</td>
                   <td>{{item.b_return_time}}</td>
-                  <td>{{item.sAdd}}</td>
+                  <td>{{item.is_borrow?'可借':'不可借'}}</td>
+                  <td>
+                    <button
+                      class="btn btn-primary"
+                      :class="item.is_borrow?'':'disabled'"
+                      style="padding-top: 2px; padding-bottom: 2px"
+                    >
+                      借阅
+                    </button>
+                  </td>
                 </tr>
 
                 <tr />
-                <tr style="height: 30px">
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
               </tbody>
             </table>
           </div>
