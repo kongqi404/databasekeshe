@@ -1,0 +1,38 @@
+.class_box {
+  margin-top: 20px;
+}
+
+th {
+  text-align: center;
+}
+.head {
+  background-color: #6091ba;
+  color: white;
+}
+
+.s_table {
+  margin-top: 20px;
+}
+.class {
+  border: 1px solid #e7e7e7;
+  text-align: center;
+  height: 50px;
+  line-height: 50px;
+  color: #337ab7;
+}
+
+.class:hover {
+  color: white;
+  background-color: #6091ba;
+}
+.selectOn {
+  color: white;
+  background-color: #337ab7;
+  font-weight: 700;
+}
+.s_name {
+  color: #6091ba;
+}
+.t_body {
+  font-weight: 400;
+}
