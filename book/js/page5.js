@@ -5,8 +5,10 @@ var page5 = new Vue({
     password_1: "",
     password_2: "",
     error: "",
+    email: "",
     isError: false,
     enterPW: "请再次输入密码：",
+    picked: "",
   },
   methods: {
     errorF: function () {
