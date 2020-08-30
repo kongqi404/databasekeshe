@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>帮助</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/template.css" />
+    <link rel="stylesheet" href="../css/iconfont.css" />
+    <link rel="stylesheet" href="../css/page3.css" />
+  </head>
+  <body>
+    <div class="header_top col-md-12">
+      <div class="col-md-1"></div>
+      <div class="page-header title col-md-10">
+        <h1>Hello<small> 这里是小韦的成绩管理系统</small></h1>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+    <div class="nav_top col-md-12">
+      <div class="col-md-1"></div>
+      <div class="col-md-10 nav_main">
+        <ul class="nav nav-pills">
+          <li>
+            <a href="./index.html"
+              ><span class="iconfont icon-shouye"></span>首页</a
+            >
+          </li>
+          <li>
+            <a href="./page1.html"
+              ><span class="iconfont icon-banji"></span>班级管理</a
+            >
+          </li>
+          <li>
+            <a href="./page2.html"
+              ><span class="iconfont icon-paiming1"></span>排名</a
+            >
+          </li>
+          <li class="active">
+            <a href="./page3.html"
+              ><span class="iconfont icon-bangzhu"></span>帮助</a
+            >
+          </li>
+          <li>
+            <a href="./page4.html"
+              ><span class="iconfont icon-signin"></span>登录</a
+            >
+          </li>
+          <li>
+            <a href="./page5.html"
+              ><span class="iconfont icon-zhuce"></span>注册</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+
+    <div class="container col-md-12 class_box">
+      <div class="col-md-1"></div>
+      <div
+        class="col-md-10"
+        style="border-bottom: 1px solid #eee; margin-bottom: 20px;"
+      >
+        <div class="class_man item_text">
+          <h4 style="float: left; font-weight: 700;">常见问题:</h4>
+          <span style="float: right; margin-top: 20px;"
+            >您在这里:<a href="index.html">首页</a>>帮助</span
+          >
+        </div>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+  <div class="col-md-12 help" >
+    <div class="col-md-8 col-md-offset-1">
+      <div class="panel panel-info" v-for="(item,index) in helpArr">
+        <div class="panel-heading" @click="change(index)">
+          <span class="iconfont" v-bind:class="isMore[index]?'icon-jian':'icon-jia'"></span>
+          <a href="##">
+          <span>{{item.q}}</span>
+          </a>
+        </div>
+        <transition name="fade">
+          <div class="panel-body p-body" v-html="item.a" v-show="isMore[index]"></div>
+        </transition>
+      </div>
+    </div>
+  </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="../js/page3.js"></script>
+</html>
