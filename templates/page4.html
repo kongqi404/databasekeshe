@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>登录</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/css/template.css" />
+    <link rel="stylesheet" href="/static/css/page4.css" />
+    <link rel="stylesheet" href="/static/css/iconfont.css" />
+  </head>
+  <body>
+  {% verbatim myblock %}
+    <div class="header_top col-md-12">
+      <div class="col-md-1"></div>
+      <div class="page-header title col-md-10">
+        <h1>Hello<small> 这里是小韦的成绩管理系统</small></h1>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+    <div class="nav_top col-md-12">
+      <div class="col-md-1"></div>
+      <div class="col-md-10 nav_main">
+        <ul class="nav nav-pills">
+          <li>
+            <a href="/"
+              ><span class="iconfont icon-shouye"></span>首页</a
+            >
+          </li>
+          <li>
+            <a href="/page1"
+              ><span class="iconfont icon-banji"></span>班级管理</a
+            >
+          </li>
+          <li>
+            <a href="/page2"
+              ><span class="iconfont icon-paiming1"></span>排名</a
+            >
+          </li>
+          <li>
+            <a href="/page3"
+              ><span class="iconfont icon-bangzhu"></span>帮助</a
+            >
+          </li>
+          <li class="active">
+            <a href="/page4"
+              ><span class="iconfont icon-signin"></span>登录</a
+            >
+          </li>
+          <li>
+            <a href="/page5"
+              ><span class="iconfont icon-zhuce"></span>注册</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+    <div class="container col-md-12 class_box">
+      <div class="col-md-1"></div>
+      <div
+        class="col-md-10"
+        style="border-bottom: 1px solid #eee; margin-bottom: 20px"
+      >
+        <div class="class_man item_text">
+          <h4 style="float: left; font-weight: 700">登录:</h4>
+          <span style="float: right; margin-top: 20px"
+            >您在这里:<a href="index.html">首页</a>>登录</span
+          >
+        </div>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="col-md-10 login_title col-md-offset-1">
+        <h2>登录</h2>
+      </div>
+      <div class="input_login col-md-10 login_box col-md-offset-1">
+        <form class="form-horizontal">
+          <div class="form-group row">
+            <div class="input-group col-md-2 user col-md-offset-5">
+              <span class="input-group-addon iconfont icon-yonghu2"></span>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="用户名或账号"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group col-md-2 user col-md-offset-5">
+              <span class="input-group-addon iconfont icon-mima1"></span>
+              <input type="password" class="form-control" placeholder="密码" />
+            </div>
+          </div>
+          <div class="input-group col-md-2 user col-md-offset-5">
+            没有账号？去<a href="./page5.html">注册</a>
+          </div>
+          <div class="form-group">
+            <div class="col-md-2 col-md-offset-5" style="padding: 0">
+              <div class="checkbox login_c">
+                <label>
+                  <input type="checkbox" />
+                  记住密码
+                </label>
+              </div>
+              <div class="login_b" style="float: right">
+                <button onclick="login()" type="button" class="btn btn-primary">
+                  登录
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+
+    <script src="/static/js/page4.js"></script>
+  {% endverbatim myblock %}
+  </body>
+</html>

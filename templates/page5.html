@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>注册</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/css/template.css" />
+    <link rel="stylesheet" href="/static/css/iconfont.css" />
+    <link rel="stylesheet" href="/static/css/page5.css" />
+  </head>
+  <body>
+
+    <div class="header_top col-md-12">
+      <div class="col-md-1"></div>
+      <div class="page-header title col-md-10">
+        <h1>Hello<small> 这里是小韦的成绩管理系统</small></h1>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+    <div class="nav_top col-md-12">
+      <div class="col-md-1"></div>
+      <div class="col-md-10 nav_main">
+        <ul class="nav nav-pills">
+          <li>
+            <a href="/"
+              ><span class="iconfont icon-shouye"></span>首页</a
+            >
+          </li>
+          <li>
+            <a href="/page1"
+              ><span class="iconfont icon-banji"></span>班级管理</a
+            >
+          </li>
+          <li>
+            <a href="/page2"
+              ><span class="iconfont icon-paiming1"></span>排名</a
+            >
+          </li>
+          <li>
+            <a href="/page3"
+              ><span class="iconfont icon-bangzhu"></span>帮助</a
+            >
+          </li>
+          <li>
+            <a href="/page4"
+              ><span class="iconfont icon-signin"></span>登录</a
+            >
+          </li>
+          <li class="active">
+            <a href="/page5"
+              ><span class="iconfont icon-zhuce"></span>注册</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+
+    <div class="container col-md-12 class_box">
+      <div class="col-md-1"></div>
+      <div
+        class="col-md-10"
+        style="border-bottom: 1px solid #eee; margin-bottom: 20px"
+      >
+        <div class="class_man item_text">
+          <h4 style="float: left; font-weight: 700">注册:</h4>
+          <span style="float: right; margin-top: 20px"
+            >您在这里:<a href="index.html">首页</a>>注册</span
+          >
+        </div>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="col-md-10 login_title col-md-offset-1">
+        <h2>注册</h2>
+      </div>
+      <div class="input_login col-md-10 login_box col-md-offset-1">
+        <form class="form-horizontal">
+          <div class="form-group row" on>
+            <div class="col-md-2 user col-md-offset-5">
+              <p>请输入用户名:</p>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="请输入："
+                v-model="us_name"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-md-2 user col-md-offset-5">
+              <p>请输入你的常用邮箱:</p>
+              <input
+                type="email"
+                @keyup="errorF"
+                class="form-control"
+                placeholder="请输入："
+                v-model="email"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-2 user col-md-offset-5">
+              <p>请输入密码:</p>
+              <input
+                type="password"
+                @keyup="errorF"
+                class="form-control"
+                placeholder="请输入："
+                v-model="password_1"
+              />
+            </div>
+          </div>
+          <div class="form-group" v-bind:class="error">
+            <div class="col-md-2 user col-md-offset-5">
+              <p>{{enterPW}}</p>
+              <input
+                type="password"
+                @keyup="errorF"
+                class="form-control"
+                placeholder="请输入："
+                v-model="password_2"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-md-2 user col-md-offset-5">
+              <label class="radio-inline">
+                <input
+                  type="radio"
+                  value="学生"
+                  name="inlineRadioOptions"
+                  v-model="picked"
+                />
+                学生
+              </label>
+              <label class="radio-inline">
+                <input
+                  type="radio"
+                  value="教师"
+                  v-model="picked"
+                  name="inlineRadioOptions"
+                />
+                教师
+              </label>
+            </div>
+          </div>
+          <div class="form-group" v-show="picked==='教师'">
+            <div class="col-md-2 user col-md-offset-5">
+              <p>请选择您的职称：</p>
+              <select class="form-control">
+                <option>讲师</option>
+                <option>助教</option>
+                <option>副教授以上</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-2 col-md-offset-5">
+              <div class="login_b" style="float: left">
+                <button @click="click" type="button" class="btn btn-primary">
+                  完成
+                </button>
+              </div>
+              <div class="have">已有账号？去<a href="page4.html">登录</a></div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="/static/js/page5.js"></script>
+  </body>
+</html>
