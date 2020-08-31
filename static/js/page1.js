@@ -1,80 +1,77 @@
-var classS = new Vue({
-  el: ".all_class",
-  data: {
-    class_inf:[],
-    classOn: 0,
-    isSelect: [true, false, false],
-    isShowSelect: true,
+var classification = new Vue({
+  el: ".classification",
+  data() {
+    return{
+      info:{
+         classification: [],
+          book_arr: [],
+          select: 1,
+      },
+  }
   },
   methods: {
-    getValue: function () {
+    getValue: function (index) {
       var that = this;
-      axios.get("/static/json/page1.json").then(
-          function (response) {
-            console.log(response.data.class_inf);
-            that.class_inf = response.data.class_inf;
+      that.select = index;
+      axios
+        .post("get_class_value", {
+          classification: index+1,
+        })
+        .then(function (response) {
+          console.log(response.data.books)
+          that.info.book_arr = response.data.books;
+          console.log(response);
+        });
+    },
+    borrow: function (b_id,is_borrowable) {
+      var that = this;
+      if(is_borrowable){
+        axios
+        .post("borrow", {
+          book_id: b_id,
+        })
+        .then(function (request) {
+          console.log(request);
+          if(request.data.code === 100){
+            alert("借阅成功，请记得及时归还！");
+             location.href="page1";
+          }else{
+            alert("借书失败！")
+          }
 
-          },
-          function (err) {}
-      );
-    },
-    select1: function () {
-      this.classOn = 0;
-      if (this.isSelect[0] != true) {
-        for (var i = 0; i < this.isSelect.length; i++) {
-          this.isSelect[i] = false;
-        }
-        this.isSelect[0] = true;
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
       }
-    },
-    select2: function () {
-      this.classOn = 1;
-      if (this.isSelect[1] != true) {
-        for (var i = 0; i < this.isSelect.length; i++) {
-          this.isSelect[i] = false;
-        }
-        this.isSelect[1] = true;
-      }
-    },
-    select3: function () {
-      this.classOn = 2;
-      if (this.isSelect[2] != true) {
-        for (var i = 0; i < this.isSelect.length; i++) {
-          this.isSelect[i] = false;
-        }
-        this.isSelect[2] = true;
-      }
-    },
-    nextSelect: function () {
-      for (var i = 0; i < this.isSelect.length; i++) {
-        if (this.isSelect[i] === true) {
-          if (i === 0) {
-            this.select2();
-            return;
-          }
-          if (i === 1) {
-            this.select3();
-          }
-        }
-      }
-    },
-    previous: function () {
-      for (var i = this.isSelect.length - 1; i >= 0; i--) {
-        if (this.isSelect[i] === true) {
-          if (i === 2) {
-            this.select2();
-            return;
-          }
-          if (i === 1) {
-            this.select1();
-          }
-        }
-      }
+
     },
   },
-  mounted() {
-    window.getValue = this.getValue;
+  // 页面加载时执行
+  created: function () {
+    //请求获取分类信息
+    var that = this;
+    axios
+      .get("classification")
+      .then(function (request) {
+
+        console.log(request.data.b_type);
+        that.info.classification = request.data.b_type;
+        console.log(this.info.classification);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+
+
+      axios
+        .get("all_books", {
+
+        })
+        .then(function (response) {
+          console.log(response.data.book_data)
+          that.info.book_arr = response.data.book_data;
+          console.log(response);
+        });
   },
 });
-
-getValue();

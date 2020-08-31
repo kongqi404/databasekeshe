@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cn">
   <head>
     <meta charset="UTF-8" />
     <title>搜索</title>
@@ -9,11 +9,11 @@
     <link rel="stylesheet" href="/static/css/iconfont.css" />
   </head>
   <body>
-  {% verbatim myblock %}
+    {% verbatim myblock %}
     <div class="header_top col-md-12">
       <div class="col-md-1"></div>
       <div class="page-header title col-md-10">
-        <h1>Hello<small> 这里是小韦的成绩管理系统</small></h1>
+        <h1>Hello<small> 这里是xxx的图书管理系统</small></h1>
       </div>
       <div class="col-md-1"></div>
     </div>
@@ -22,13 +22,11 @@
       <div class="col-md-10 nav_main">
         <ul class="nav nav-pills">
           <li>
-            <a href="/index"
-              ><span class="iconfont icon-shouye"></span>首页</a
-            >
+            <a href="/index"><span class="iconfont icon-shouye"></span>首页</a>
           </li>
           <li>
             <a href="/page1"
-              ><span class="iconfont icon-banji"></span>班级管理</a
+              ><span class="iconfont icon-banji"></span>图书分类</a
             >
           </li>
           <li class="active">
@@ -37,19 +35,13 @@
             >
           </li>
           <li>
-            <a href="/page3"
-              ><span class="iconfont icon-bangzhu"></span>帮助</a
-            >
+            <a href="/page3"><span class="iconfont icon-bangzhu"></span>我的</a>
           </li>
           <li>
-            <a href="/page4"
-              ><span class="iconfont icon-signin"></span>登录</a
-            >
+            <a href="/page4"><span class="iconfont icon-signin"></span>登录</a>
           </li>
           <li>
-            <a href="/page5"
-              ><span class="iconfont icon-zhuce"></span>注册</a
-            >
+            <a href="/page5"><span class="iconfont icon-zhuce"></span>注册</a>
           </li>
         </ul>
       </div>
@@ -61,7 +53,7 @@
         <div class="class_man item_text">
           <h4 style="float: left; font-weight: 700">搜索:</h4>
           <span style="float: right; margin-top: 20px"
-            >您在这里:<a href="index.html">首页</a>>搜索</span
+            >您在这里:<a href="/">首页</a>>搜索</span
           >
         </div>
       </div>
@@ -76,7 +68,7 @@
             <div class="select" style="font-weight: 700">
               <form class="form-inline">
                 搜索
-                <input type="text" class="form-control" v-model="b_keyword" />
+                <input type="text" class="form-control" v-model="info.b_keyword" />
                 <input
                   type="button"
                   class="btn btn-primary"
@@ -100,15 +92,14 @@
                   <th>出版社</th>
                   <th>图书总数</th>
                   <th>剩余图书</th>
-                  <th>最早归还时间</th>
-                  <th width="7%">是否可借</th>
-                  <th>借阅</th>
+                  <th>是否可借</th>
+                  <th width="%4">借阅</th>
                 </tr>
 
                 <tr />
               </thead>
               <tbody class="table_body">
-                <tr v-for="(item,index) in b_arr">
+                <tr v-for="(item,index) in info.b_arr">
                   <td>{{index+1}}</td>
                   <td id="tname">{{item.b_name}}</td>
                   <td>{{item.b_author}}</td>
@@ -116,20 +107,20 @@
                   <td>{{item.b_public}}</td>
                   <td>{{item.b_total}}</td>
                   <td>{{item.b_lave}}</td>
-                  <td>{{item.b_return_time}}</td>
-                  <td>{{item.is_borrow?'可借':'不可借'}}</td>
+
+                  <td v-if="item.is_borrowable">可借</td>
+                    <td v-else>不可借</td>
                   <td>
                     <button
                       class="btn btn-primary"
-                      :class="item.is_borrow?'':'disabled'"
+                      :class="item.is_borrowable?'':'disabled'"
                       style="padding-top: 2px; padding-bottom: 2px"
-                      @click="borrow(item.id)"
+                      @click="borrow(item.b_id,item.is_borrowable)"
                     >
                       借阅
                     </button>
                   </td>
                 </tr>
-
                 <tr />
               </tbody>
             </table>
@@ -138,7 +129,7 @@
       </div>
       <div class="col-md-1"></div>
     </div>
-  {% endverbatim myblock %}
+    {% endverbatim myblock %}
   </body>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

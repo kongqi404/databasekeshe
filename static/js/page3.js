@@ -1,32 +1,64 @@
-var help = new Vue({
-    el:".help",
-    data:{
-      helpArr:[]
-          ,
-        isMore:[],
+var my_inf = new Vue({
+  el: ".my_inf",
+  data: {
+    name: "",
+    user_inf: {
+      user_name: "",
+      user_title: "",
+      user_total: 0,
+      user_borrow: 0,
+      is_expected: false,
     },
-    mounted(){
-        for(var i = 0;i < this.helpArr.length;i++){
-            this.isMore[i] = false;
-        }
-        var that = this;
-        axios.get("/static/json/page3.json").then(
-            function (response) {
-                console.log(response.data.helpArr);
-                that.helpArr = response.data.helpArr;
-            },
-            function (err) {}
-        );
-        console.log(this.helpArr)
-    },
-    methods:{
-        change:function (index) {
-            // this.isMore[index] = !this.isMore[index];
-            // console.log(this.isMore[index])
-            //不能通过直接修改数组的值控制v-for生成的数组中的true 或 false
-            this.$set(this.isMore,index,!this.isMore[index]);
-                console.log(this.helpArr[0].isMore)
+    borrowed_arr: [],
+  },
+  methods: {
+    return_book: function (book_id) {
+      var that = this;
+      axios
+        .post("book_return", {
+          book_id: book_id,
+        })
+        .then(function (request) {
+          console.log(request);
 
+          if (request.data.code === 200) {
+            alert("归还失败，请稍后重试！");
+          } else {
+
+            location.href="/page4";
+            alert("归还成功！");
+          }
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    },
+
+    get_borrow_value: function () {
+      var that= this;
+      axios.post("get_borrow_value").then(function (request) {
+        console.log(request.data.code);
+        if (request.data.code === 200) {
+          alert("借书信息加载失败，请尝试刷新页面！");
+        } else {
+          that.borrowed_arr = request.data.borrowed_arr;
         }
-    }
-})
+      });
+    },
+    get_user_inf:function(){
+      var that= this;
+      axios.get("get_user_inf").then(function (request) {
+        console.log("request");
+        that.user_inf = request.data.user_inf;
+        console.log(request.data.user_inf);
+    }).catch(function (err) {
+      console.log(err)
+    })
+  },
+  },
+
+  created: function () {
+    this.get_user_inf();
+    this.get_borrow_value();
+  },
+});

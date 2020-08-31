@@ -1,17 +1,24 @@
 var app = new Vue({
   el: "#body",
-  data: {
-    b_type: [],
-    b_arr: [],
-    b_keyword: "",
+  data() {
+    return {
+        info: {
+        b_type: [],
+        b_arr: [],
+        b_keyword: "",
+      }
+    }
+
   },
+
   methods: {
     getValue: function () {
       var that = this;
-      axios.get("/static/json/page2.json").then(
+      axios.get("all_books").then(
         function (response) {
+          console.log(response);
+          that.info.b_arr = response.data.book_data;
           console.log(response.data.book_data);
-          that.b_arr = response.data.book_data;
         },
         function (err) {}
       );
@@ -20,32 +27,51 @@ var app = new Vue({
     select: function () {
       var that = this;
       axios
-        .get("", {
+        .get("search", {
           params: {
             // 通过作者或者书名查询
-            keyword: that.b_keyword,
+            keyword: that.info.b_keyword,
           },
         })
-        .then(function (request) {})
+        .then(function (request) {
+          console.log(request.code);
+          if (request.code === 200) {
+            alert("查询无果！");
+          } else {
+            that.info.b_arr = response.data.book_data_select;
+          }
+        })
         .catch(function (err) {
           console.log("error");
           console.log(that.b_keyword);
         });
     },
-    borrow: function (b_id) {
+    borrow: function (b_id,is_borrowable) {
       var that = this;
-      axios
-        .post("", {
-          book_id: b_id,
-          csrfmiddlewaretoken: "{{csrf_token}}",
+      console.log(b_id);
+      if(is_borrowable){
+         axios
+        .post("borrow", {
+          book_id:b_id
         })
-        .then(function (request) {});
+        .then(function (request) {
+          console.log(request.data.code);
+          if(request.data.code === 100){
+            alert("借阅成功，请记得按时归还！")
+             location.href="page2";
+          }else{
+              alert("借阅失败！")
+            }
+
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+      }
+
     },
   },
-  mounted() {
-    window.getValue = this.getValue;
-    // window.match = this.sortByMath;
+  created: function () {
+    this.getValue();
   },
 });
-
-getValue();

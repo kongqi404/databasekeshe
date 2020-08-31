@@ -20,11 +20,13 @@ class Book(models.Model):
 # 老师
 class Teacher(User):
     type = models.ForeignKey("Type", on_delete=models.CASCADE)
+    borrow = models.IntegerField(default=0)
 
 
 # 学生
 class Student(User):
     max_borrow = models.IntegerField(default=5)
+    borrow=models.IntegerField(default=0)
 
 
 # 职称类型

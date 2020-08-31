@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cn">
   <head>
     <meta charset="UTF-8" />
     <title>首页</title>
@@ -10,14 +10,14 @@
   </head>
 
   <body onresize="window.width()">
-  {% verbatim myblock %}
+    {% verbatim myblock %}
     <div class="allPage">
       <div class="isLoding">
         <div class="all col-md-12">
           <div class="header_top col-md-10">
             <div class="col-md-1"></div>
             <div class="page-header title col-md-10">
-              <h1>Hello<small> 这里是小韦的成绩管理系统</small></h1>
+              <h1>Hello<small> 这里是xxx的图书管理系统</small></h1>
             </div>
             <div class="col-md-1"></div>
           </div>
@@ -26,13 +26,11 @@
             <div class="col-md-10 nav_main">
               <ul class="nav nav-pills">
                 <li class="active">
-                  <a href="/"
-                    ><span class="iconfont icon-shouye"></span>首页</a
-                  >
+                  <a href="/"><span class="iconfont icon-shouye"></span>首页</a>
                 </li>
                 <li>
                   <a href="/page1"
-                    ><span class="iconfont icon-banji"></span>班级管理</a
+                    ><span class="iconfont icon-banji"></span>图书管理</a
                   >
                 </li>
                 <li>
@@ -42,7 +40,7 @@
                 </li>
                 <li>
                   <a href="/page3"
-                    ><span class="iconfont icon-bangzhu"></span>帮助</a
+                    ><span class="iconfont icon-bangzhu"></span>我的</a
                   >
                 </li>
                 <li>
@@ -52,7 +50,7 @@
                 </li>
                 <li>
                   <a href="/page5">
-                      <span class="iconfont icon-zhuce"></span>注册
+                    <span class="iconfont icon-zhuce"></span>注册
                   </a>
                 </li>
               </ul>
@@ -61,7 +59,7 @@
         </div>
       </div>
     </div>
-  {% endverbatim myblock %}
+    {% endverbatim myblock %}
   </body>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

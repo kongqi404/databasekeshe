@@ -1,44 +1,64 @@
 var page5 = new Vue({
   el: ".login_box",
   data: {
-    us_name: "",
-    password_1: "",
+    user_inf: {
+      csrfmiddlewaretoken: "{{csrf_token}}",
+      us_name: "",
+      password_1: "",
+      email: "",
+      picked: "",
+      job_title: "0",
+    },
     password_2: "",
     error: "",
-    email: "",
     isError: false,
     enterPW: "请再次输入密码：",
-    picked: "",
   },
   methods: {
     errorF: function () {
-      if (this.password_1 != "" && this.password_2 != "") {
-        if (this.password_1 !== this.password_2) {
+      if (this.user_inf.password_1 !== "" && this.password_2 !== "") {
+        if (this.user_inf.password_1 != this.password_2) {
           this.isError = true;
         }
-      }
-      if (this.password_1 != "" && this.password_2 != "") {
-        if (this.password_1 === this.password_2) {
+        if (this.user_inf.password_1 === this.password_2) {
           this.isError = false;
         }
-      }
-      if (this.password_2 === "") {
+      } else {
         this.isError = false;
       }
+      console.log(this.isError);
       this.error = this.isError ? "has-error" : "";
-      this.enterPW = this.isError ? "两次输入的密码不一致" : "请再次输入密码：";
     },
-    click: function () {
-      if (this.us_name === "") {
-        alert("请先输入用户名信息！");
-      } else if (this.password_1 === "") {
-        alert("请先输入密码！");
-      } else if (this.password_2 === "") {
-        alert("请先再次输入密码以确认！");
-      } else if (this.password_2 !== "" && this.isError === true) {
-        alert("两次输入的密码不一致，请检查！");
+    registered: function () {
+      console.log(JSON.stringify(this.user_inf));
+      if (
+        this.user_inf.password_1 === "" ||
+        this.user_inf.us_name === "" ||
+        this.user_inf.email === "" ||
+        this.user_inf.picked === "" ||
+        this.isError
+      ) {
+        alert("填写的信息不完善或信息有误，请检查后重试！");
       } else {
-        alert("注册失败，并且不想告诉你为啥失败！");
+        if (!this.isError) {
+          axios
+            .post("sign_up", this.user_inf)
+            .then(function (response) {
+              console.log(response);
+              if (response.code === 200) {
+                alert("注册失败，请重试！");
+              } else {
+                alert("注册成功！即将跳转到登陆页面！");
+                setTimeout: (function () {
+                  location.href("/page3");
+                },
+                  3000);
+              }
+            })
+            .catch(function (err) {
+              console.log(err);
+            });
+        }
       }
     },
   },

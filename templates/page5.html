@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cn">
   <head>
     <meta charset="UTF-8" />
     <title>注册</title>
@@ -9,11 +9,10 @@
     <link rel="stylesheet" href="/static/css/page5.css" />
   </head>
   <body>
-
     <div class="header_top col-md-12">
       <div class="col-md-1"></div>
       <div class="page-header title col-md-10">
-        <h1>Hello<small> 这里是小韦的成绩管理系统</small></h1>
+        <h1>Hello<small> 这里是xxx的图书管理系统</small></h1>
       </div>
       <div class="col-md-1"></div>
     </div>
@@ -22,34 +21,26 @@
       <div class="col-md-10 nav_main">
         <ul class="nav nav-pills">
           <li>
-            <a href="/"
-              ><span class="iconfont icon-shouye"></span>首页</a
-            >
+            <a href="/"><span class="iconfont icon-shouye"></span>首页</a>
           </li>
           <li>
             <a href="/page1"
-              ><span class="iconfont icon-banji"></span>班级管理</a
+              ><span class="iconfont icon-banji"></span>图书分类</a
             >
           </li>
           <li>
             <a href="/page2"
-              ><span class="iconfont icon-paiming1"></span>排名</a
+              ><span class="iconfont icon-paiming1"></span>搜索</a
             >
           </li>
           <li>
-            <a href="/page3"
-              ><span class="iconfont icon-bangzhu"></span>帮助</a
-            >
+            <a href="/page3"><span class="iconfont icon-bangzhu"></span>我的</a>
           </li>
           <li>
-            <a href="/page4"
-              ><span class="iconfont icon-signin"></span>登录</a
-            >
+            <a href="/page4"><span class="iconfont icon-signin"></span>登录</a>
           </li>
           <li class="active">
-            <a href="/page5"
-              ><span class="iconfont icon-zhuce"></span>注册</a
-            >
+            <a href="/page5"><span class="iconfont icon-zhuce"></span>注册</a>
           </li>
         </ul>
       </div>
@@ -65,7 +56,7 @@
         <div class="class_man item_text">
           <h4 style="float: left; font-weight: 700">注册:</h4>
           <span style="float: right; margin-top: 20px"
-            >您在这里:<a href="index.html">首页</a>>注册</span
+            >您在这里:<a href="/">首页</a>>注册</span
           >
         </div>
       </div>
@@ -78,14 +69,14 @@
       </div>
       <div class="input_login col-md-10 login_box col-md-offset-1">
         <form class="form-horizontal">
-          <div class="form-group row" on>
+          <div class="form-group row">
             <div class="col-md-2 user col-md-offset-5">
               <p>请输入用户名:</p>
               <input
                 type="text"
                 class="form-control"
                 placeholder="请输入："
-                v-model="us_name"
+                v-model="user_inf.us_name"
               />
             </div>
           </div>
@@ -98,7 +89,7 @@
                 @keyup="errorF"
                 class="form-control"
                 placeholder="请输入："
-                v-model="email"
+                v-model="user_inf.email"
               />
             </div>
           </div>
@@ -110,13 +101,17 @@
                 @keyup="errorF"
                 class="form-control"
                 placeholder="请输入："
-                v-model="password_1"
+                v-model="user_inf.password_1"
               />
             </div>
           </div>
           <div class="form-group" v-bind:class="error">
             <div class="col-md-2 user col-md-offset-5">
-              <p>{{enterPW}}</p>
+              {% verbatim myblock %}
+              <p v-show="!isError">请再次输入密码：</p>
+              <p v-show="isError">两次密码输入不一致</p>
+
+              {% endverbatim myblock %}
               <input
                 type="password"
                 @keyup="errorF"
@@ -134,7 +129,7 @@
                   type="radio"
                   value="学生"
                   name="inlineRadioOptions"
-                  v-model="picked"
+                  v-model="user_inf.picked"
                 />
                 学生
               </label>
@@ -142,31 +137,35 @@
                 <input
                   type="radio"
                   value="教师"
-                  v-model="picked"
+                  v-model="user_inf.picked"
                   name="inlineRadioOptions"
                 />
                 教师
               </label>
             </div>
           </div>
-          <div class="form-group" v-show="picked==='教师'">
+          <div class="form-group" v-show="user_inf.picked==='教师'">
             <div class="col-md-2 user col-md-offset-5">
               <p>请选择您的职称：</p>
-              <select class="form-control">
-                <option>讲师</option>
-                <option>助教</option>
-                <option>副教授以上</option>
+              <select class="form-control" v-model="user_inf.job_title">
+                <option value="1">讲师</option>
+                <option value="2">助教</option>
+                <option value="3">副教授以上</option>
               </select>
             </div>
           </div>
           <div class="form-group">
             <div class="col-md-2 col-md-offset-5">
               <div class="login_b" style="float: left">
-                <button @click="click" type="button" class="btn btn-primary">
+                <button
+                  @click="registered"
+                  type="button"
+                  class="btn btn-primary"
+                >
                   完成
                 </button>
               </div>
-              <div class="have">已有账号？去<a href="page4.html">登录</a></div>
+              <div class="have">已有账号？去<a href="page4">登录</a></div>
             </div>
           </div>
         </form>
@@ -174,6 +173,7 @@
       <div class="col-md-1"></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/static/js/page5.js"></script>
   </body>
 </html>
