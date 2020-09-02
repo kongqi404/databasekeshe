@@ -6,11 +6,14 @@ var classification = new Vue({
          classification: [],
           book_arr: [],
           select: 1,
+        is_loading:true,
       },
   }
   },
   methods: {
     getValue: function (index) {
+      this.info.is_loading=true;
+      console.log(this.info)
       var that = this;
       that.select = index;
       axios
@@ -18,9 +21,11 @@ var classification = new Vue({
           classification: index+1,
         })
         .then(function (response) {
-          console.log(response.data.books)
+
           that.info.book_arr = response.data.books;
-          console.log(response);
+
+
+          console.log(that.info.is_loading)
         });
     },
     borrow: function (b_id,is_borrowable) {
@@ -48,30 +53,30 @@ var classification = new Vue({
     },
   },
   // 页面加载时执行
-  created: function () {
+  created () {
+
     //请求获取分类信息
     var that = this;
     axios
       .get("classification")
       .then(function (request) {
 
-        console.log(request.data.b_type);
+
         that.info.classification = request.data.b_type;
-        console.log(this.info.classification);
+
       })
       .catch(function (err) {
         console.log(err);
       });
-
-
       axios
         .get("all_books", {
 
         })
         .then(function (response) {
-          console.log(response.data.book_data)
+
           that.info.book_arr = response.data.book_data;
-          console.log(response);
+          that.info.is_loading = false;
+          console.log(that.info.is_loading)
         });
   },
 });

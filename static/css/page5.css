@@ -2,10 +2,8 @@
   color: #6091ba;
   display: block;
   text-align: center;
-  margin-top: 30px;
-  margin-bottom: 10px;
-}
-.input_login {
+
+
 }
 
 .login_btn button {
@@ -16,9 +14,10 @@
   float: left;
 }
 .have {
-  float: right;
+  float: left;
   line-height: 34px;
 }
-.class_box {
-  margin-top: 20px;
+
+[v-cloak]{
+    display: none;
 }

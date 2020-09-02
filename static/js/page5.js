@@ -1,5 +1,5 @@
 var page5 = new Vue({
-  el: ".login_box",
+  el: ".head",
   data: {
     user_inf: {
       csrfmiddlewaretoken: "{{csrf_token}}",
@@ -29,6 +29,9 @@ var page5 = new Vue({
       console.log(this.isError);
       this.error = this.isError ? "has-error" : "";
     },
+    to_search:function(){
+      console.log("1111")
+    },
     registered: function () {
       console.log(JSON.stringify(this.user_inf));
       if (
@@ -44,15 +47,12 @@ var page5 = new Vue({
           axios
             .post("sign_up", this.user_inf)
             .then(function (response) {
-              console.log(response);
-              if (response.code === 200) {
-                alert("注册失败，请重试！");
+              console.log(response.data.code);
+              if (response.data.code === 200) {
+                alert("注册失败，可能该用户名已存在！");
               } else {
                 alert("注册成功！即将跳转到登陆页面！");
-                setTimeout: (function () {
-                  location.href("/page3");
-                },
-                  3000);
+                  location.href=("/page3");
               }
             })
             .catch(function (err) {
@@ -63,3 +63,4 @@ var page5 = new Vue({
     },
   },
 });
+

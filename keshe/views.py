@@ -47,7 +47,7 @@ def borrow(request):
                     book.save()
                     person.borrow += 1
                     person.save()
-                    borrow = BorrowTeacher(teacher=person, book=book)
+                    borrow = BorrowTeacher(teacher=person, book=book).save()
                     d["code"] = 100
 
             else:
@@ -66,6 +66,10 @@ def borrow(request):
 
 def index(request):
     return render(request, "index.html")
+
+
+def page0(request):
+    return render(request, "page0.html")
 
 
 def page1(request):
@@ -101,19 +105,19 @@ def page5(request):
 # 注册
 def sign_up(request):
     res = json.loads(request.body)
-    d = {}
+    d = {"code": 200}
     try:
         if res["picked"] == "学生":
             person = Student.objects.create_user(username=res["us_name"], password=res["password_1"],
                                                  email=res["email"])
+            d["code"] = 100
         else:
             person = Teacher.objects.create_user(username=res["us_name"], password=res["password_1"],
                                                  email=res["email"],
                                                  type=Type.objects.get(id=res["job_title"]))
+            d["code"] = 100
     except:
         d["code"] = 200
-    else:
-        d["code"] = 100
     return JsonResponse(d)
 
 
@@ -146,7 +150,7 @@ def user_inf(request):
                          "user_borrow": person.borrow}
     else:
         person = Teacher.objects.get(username=request.session["user_name"])
-        d["user_inf"] = {"user_name": person.username, "user_title": "教师", "user_total": person.type.max_borrow,
+        d["user_inf"] = {"user_name": person.username, "user_title": person.type.type, "user_total": person.type.max_borrow,
                          "user_borrow": person.borrow}
     print(d)
     return JsonResponse(d)
@@ -180,30 +184,28 @@ def return_book(request):
     books = None
     book = json.loads(request.body)
     print(book["book_id"])
+    print( request.session["picked"])
     if "book_id" in book:
         try:
             if request.session["picked"] == 0:
                 person = Student.objects.get(username=request.session["user_name"])
-
                 books = BorrowStudent.objects.filter(student=person, book=Book.objects.get(b_id=int(book["book_id"])))
-
                 person.borrow -= 1
-                person.save()
-                book=books[0].book
-                book.b_lave -= 1
-                book.save()
-                books[0].delete()
+                bk = books[0].book
+                bk.b_lave -= 1
+
             else:
                 person = Teacher.objects.get(username=request.session["user_name"])
-                books = BorrowTeacher.objects.filter(teacher=person, book=Book.objects.get(b_id=book["book_id"]))
+                books = BorrowTeacher.objects.filter(teacher=person, book=Book.objects.get(b_id=int(book["book_id"])))
                 person.borrow -= 1
-                person.save()
-                book.b_lave -= 1
-                book.save()
-                books[0].delete()
+                bk = books[0].book
+                bk.b_lave -= 1
         except:
             res["code"] = 200
         else:
+            person.save()
+            bk.save()
+            books[0].delete()
             res["code"] = 100
     return JsonResponse(res)
 

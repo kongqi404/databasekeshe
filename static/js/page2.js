@@ -6,6 +6,7 @@ var app = new Vue({
         b_type: [],
         b_arr: [],
         b_keyword: "",
+            is_loading:true
       }
     }
 
@@ -13,18 +14,21 @@ var app = new Vue({
 
   methods: {
     getValue: function () {
+        this.info.is_loading =true;
       var that = this;
       axios.get("all_books").then(
         function (response) {
           console.log(response);
           that.info.b_arr = response.data.book_data;
           console.log(response.data.book_data);
+          that.info.is_loading  = false;
         },
         function (err) {}
       );
     },
 
     select: function () {
+        this.info.is_loading = true;
       var that = this;
       axios
         .get("search", {
@@ -34,11 +38,13 @@ var app = new Vue({
           },
         })
         .then(function (request) {
-          console.log(request.code);
+            that.info.is_loading = false;
+            console.log(that.info.is_loading);
+          console.log(request);
           if (request.code === 200) {
             alert("查询无果！");
           } else {
-            that.info.b_arr = response.data.book_data_select;
+            that.info.b_arr = request.data.book_data_select;
           }
         })
         .catch(function (err) {
