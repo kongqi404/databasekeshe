@@ -50,7 +50,7 @@
 
         margin: 50px auto;
         margin-bottom: 0;
-  width: 512px;
+    width: 512px;
 }
 .demo-card-wide > .mdl-card__title {
   color: #fff;
@@ -88,25 +88,34 @@
           </button>
         </div>
       </header>
-        <div class="my_inf">
-      <div>
 
-          <div class="demo-card-wide mdl-card mdl-shadow--2dp" >
-  <div class="mdl-card__title" v-cloak>
+        <div class="my_inf">
+              <div id="Loading"  v-if="is_loading" style="margin-top: 333px" class=" mdl-progress mdl-js-progress mdl-progress__indeterminate col-md-4 col-lg-offset-4"></div>
+
+            <div v-if="!is_loading">
+
+          <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+  <div class="mdl-card__title">
     <h2 class="mdl-card__title-text">您好！{{user_inf.user_name}}</h2>
   </div>
-  <div class="mdl-card__supporting-text" style="margin: 20px 20px 20px 30px" v-cloak>
+  <div class="mdl-card__supporting-text" style="margin: 20px 20px 20px 30px">
    <ul>
        <li>职位：{{ user_inf.user_title }}</li>
        <li>总共可借阅图书数：{{ user_inf.user_total }}</li>
        <li>已借阅图书数：{{ user_inf.user_borrow}}</li>
    </ul>
   </div>
+              <div class="mdl-card__actions mdl-card--border" onclick="location.href='logout'">
+    <span class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" >
+      退出登录
+    </span>
+  </div>
 
 
 </div>
-      </div>
+
       <!-- 当前以借阅图书信息： -->
+
       <div class="col-md-8 col-md-offset-2" v-cloak>
         <h4>已借阅图书</h4>
         <table class="table table-hover table-bordered text-center table_body" style="box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12); background-color: white; border: 1px solid rgba(0,0,0,.12);">
@@ -145,6 +154,7 @@
         </table>
 
       </div>
+            </div>
     </div>
       <main class="mdl-layout__content">
 

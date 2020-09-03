@@ -3,12 +3,10 @@ var my_inf = new Vue({
   data: {
     name: "",
     user_inf: {
-      user_name: "",
-      user_title: "",
-      user_total: 0,
-      user_borrow: 0,
-      is_expected: false,
+
+
     },
+    is_loading:true,
     borrowed_arr: [],
   },
   methods: {
@@ -46,11 +44,13 @@ var my_inf = new Vue({
       });
     },
     get_user_inf:function(){
+      this.is_loading = true;
       var that= this;
       axios.get("get_user_inf").then(function (request) {
         console.log("request");
         that.user_inf = request.data.user_inf;
         console.log(request.data.user_inf);
+        that.is_loading = false;
     }).catch(function (err) {
       console.log(err)
     })

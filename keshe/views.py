@@ -47,7 +47,8 @@ def borrow(request):
                     book.save()
                     person.borrow += 1
                     person.save()
-                    borrow = BorrowTeacher(teacher=person, book=book).save()
+                    borrow = BorrowTeacher(teacher=person, book=book)
+                    borrow.save()
                     d["code"] = 100
 
             else:
@@ -57,7 +58,8 @@ def borrow(request):
                     book.save()
                     person.borrow += 1
                     person.save()
-                    borrow = BorrowStudent(student=person, book=book).save()
+                    borrow = BorrowStudent(student=person, book=book)
+                    borrow.save()
                     d["code"] = 100
         except:
             d["code"] = 200
@@ -123,7 +125,7 @@ def sign_up(request):
 
 # 登录
 def login(request):
-    d = {}
+    d = {"code":200}
     res = json.loads(request.body)
     print(res)
     person = authenticate(request, username=res["user_name"], password=res["password"])
@@ -138,6 +140,7 @@ def login(request):
         d["code"] = 100
     else:
         d["code"] = 200
+    print(d)
     return JsonResponse(d)
 
 
@@ -150,7 +153,8 @@ def user_inf(request):
                          "user_borrow": person.borrow}
     else:
         person = Teacher.objects.get(username=request.session["user_name"])
-        d["user_inf"] = {"user_name": person.username, "user_title": person.type.type, "user_total": person.type.max_borrow,
+        d["user_inf"] = {"user_name": person.username, "user_title": person.type.type,
+                         "user_total": person.type.max_borrow,
                          "user_borrow": person.borrow}
     print(d)
     return JsonResponse(d)
@@ -171,8 +175,7 @@ def borrowed_arr(request):
                             "book_borrow": i.borrow_date,
                             "book_return": i.borrow_date + timezone.timedelta(days=30),
                             "is_expected": timezone.now().date() > (i.borrow_date + timezone.timedelta(days=30))} for i
-                           in
-                           books]
+                           in books]
     print(res)
     return JsonResponse(res)
 
@@ -184,7 +187,7 @@ def return_book(request):
     books = None
     book = json.loads(request.body)
     print(book["book_id"])
-    print( request.session["picked"])
+    print(request.session["picked"])
     if "book_id" in book:
         try:
             if request.session["picked"] == 0:
@@ -245,3 +248,8 @@ def search(request):
         ]}
         print(res)
     return JsonResponse(res)
+
+
+def logout(request):
+    request.session.clear()
+    return redirect("/page4")
