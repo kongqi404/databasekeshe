@@ -89,10 +89,10 @@
         </div>
       </header>
 
-        <div class="my_inf">
+        <div class="my_inf" >
               <div id="Loading"  v-if="is_loading" style="margin-top: 333px" class=" mdl-progress mdl-js-progress mdl-progress__indeterminate col-md-4 col-lg-offset-4"></div>
 
-            <div v-if="!is_loading">
+            <div v-if="!is_loading" v-cloak>
 
           <div class="demo-card-wide mdl-card mdl-shadow--2dp">
   <div class="mdl-card__title">
